@@ -1,11 +1,11 @@
 <script>
 export default {
-    name: "pt-tag",
+    name: "PtTag",
     props: {
         text: String,
         closable: Boolean,
         type: String,
-        size: String,
+        size: String
     },
     methods: {
         handleClick(event) {
@@ -13,11 +13,12 @@ export default {
         }
     },
     render(h) {
+        const { type, size } = this;
         const classes = [
             'pt-tag',
             type ? `pt-tag--${type}` : '',
-            size ? `pt-tag--${size}` : '',
-        ];
+            size ? `pt-tag--${size}` : ''
+        ]
         const ptTag = (
             <span
                 class={classes}
@@ -37,8 +38,16 @@ export default {
 
 <style scoped>
 .pt-tag {
-    border: 1px solid #ddd;
-    border-radius: 3px;
+    display: inline-block;
+    padding: 0 10px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    line-height: 20px;
+    height: 22px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    background-color: #eee;
 }
 
 .pt-tag--primary {
