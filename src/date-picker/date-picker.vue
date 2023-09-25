@@ -61,10 +61,18 @@ export default {
             this.currentYear -= 1;
         },
         previousMonth() {
-            this.currentMonth -= 1;
+            if (this.currentMonth === 0) {
+                this.currentYear -= 1;
+                this.currentMonth = 11;
+            } else {
+                this.currentMonth -= 1;
+            }
         },
         nextMonth() {
-            this.currentMonth += 1;
+            if (this.currentMonth === 11) {
+                this.currentYear += 1;
+            }
+            this.currentMonth = (this.currentMonth + 1) % 12;
         },
         nextYear() {
             this.currentYear += 1;
@@ -150,6 +158,10 @@ export default {
     border-radius: 3px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     position: absolute;
+    margin-top: 7px;
+
+    background-color: #fff;
+    z-index: 9999;
 }
 
 .pt-calendar-aside {
