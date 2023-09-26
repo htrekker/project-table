@@ -134,6 +134,8 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+src/theme-default/node_modules/*
+src/theme-default/lib/*
 
 # Editor directories and files
 .idea
