@@ -6,19 +6,21 @@
 
 ## TODOS
 
-- [ ] date picker
+- [x] date picker
 - [ ] number input
-- [ ] inline input
+- [x] inline input
 - [ ] selector input
 - [ ] progress bar
 - [ ] person picker
-- [ ] tag
+- [x] tag
 - [ ] badge
 - [ ] resizable
 - [ ] sortable
 - [ ] checkbox column
 - [ ] radio column
 - [ ] tree
+
+For future plan, we also consider to migrate the components library to [Web Components](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components). Since in our production environment, we use several runtime frameworks (e.g. Angular, Vue). 
 
 
 ## Reference Links

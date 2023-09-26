@@ -5,10 +5,12 @@
   "author": "pasilo he",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "build:theme": "gulp -f src/theme-default/gulpfile.js compile && mkdir -p lib/theme-default && cp -r src/theme-default/lib/* lib/theme-default",
+    "dev": "npm run build:theme && webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "clean": "rm -rf ./lib"
   },
   "dependencies": {
     "lodash": "^4.17.21",
