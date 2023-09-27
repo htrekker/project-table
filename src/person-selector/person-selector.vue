@@ -2,7 +2,7 @@
     <div class="shallow-box-shadow people-selector">
         <div style="">
             <input>
-            <div v-for="person in people" :key="`person-select-${index}`" class="person-item">
+            <div v-for="(person, index) in people" :key="`person-select-${index}`" class="person-item">
                 <div style="display: flex;">
                     <div style="border-radius: 50%; width: 50px; height: 50px; background-color: #ddd;"></div>
                     <div>
@@ -16,7 +16,7 @@
         <div class="selector-separator"></div>
         <div style="min-width: 200px;">
             <div>已选择（{{ selectedPeople.length }}）</div>
-            <div v-for="person in selectedPeople" :key="`person-selected-${index}`"
+            <div v-for="(person, index) in selectedPeople" :key="`person-selected-${index}`"
                 style="display: flex; justify-content: space-between; align-items: center; width: 200px;">
                 <div style="display: flex;">
                     <div style="border-radius: 50%; width: 50px; height: 50px; background-color: #ddd;"></div>

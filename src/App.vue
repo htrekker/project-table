@@ -20,6 +20,12 @@
             <button @click="showPersonSelector = !showPersonSelector">点击显示人员选择器</button>
             <pt-person-selector></pt-person-selector>
         </div>
+
+        <pt-icon name="double-left"></pt-icon>
+        <pt-icon name="arrow-left"></pt-icon>
+
+        <pt-icon name="arrow-right"></pt-icon>
+        <pt-icon name="double-right"></pt-icon>
     </div>
 </template>
 
@@ -28,6 +34,7 @@ import PtTag from './tag/tag.vue'
 import PtDatePicker from './date-picker/date-picker.vue'
 import PtInlineInput from './inline-input/inline-input.vue'
 import PtPersonSelector from './person-selector/person-selector.vue'
+import PtIcon from './icon/icon.vue';
 
 export default {
     data() {
@@ -46,7 +53,8 @@ export default {
         PtTag,
         PtDatePicker,
         PtInlineInput,
-        PtPersonSelector
+        PtPersonSelector,
+        PtIcon
     }
 }
 </script>

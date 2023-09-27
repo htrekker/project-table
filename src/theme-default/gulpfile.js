@@ -11,9 +11,17 @@ const cssmin = require('gulp-cssmin');
 */
 
 
-gulp.task('compile', async () => {
+async function compile() {
     await gulp.src('./src/*.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(cssmin())
         .pipe(gulp.dest('./lib'));
-});
+};
+
+async function fonts() {
+    await gulp.src('./fonts/*')
+          .pipe(cssmin())
+          .pipe(gulp.dest('./lib/fonts'));
+};
+
+exports.build = gulp.series(compile, fonts);

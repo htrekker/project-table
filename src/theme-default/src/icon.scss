@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'pt-icon';
+    src: url('./fonts/pt-icons.ttf') format('truetype2'),
+        url('./fonts/pt-icons.woff') format('woff');
+    font-weight: normal;
+}
+
+[class^="pt-icon-"],
+[class*=" pt-icon-"] {
+    font-family: 'pt-icon' !important;
+    font-style: normal;
+
+    vertical-align: baseline;
+    display: inline-block;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.pt-icon-close-circle:before {
+    content: "\e77d";
+}
+
+.pt-icon-info-circle:before {
+    content: "\e77e";
+}
+
+.pt-icon-add-user:before {
+    content: "\e7ae"
+}
+
+.pt-icon-unlike:before {
+    content: "\e7c9";
+}
+
+.pt-icon-arrow-right:before {
+    content: "\e7ed";
+}
+
+.pt-icon-arrow-left:before {
+    content: "\e7ee";
+}
+
+.pt-icon-double-right:before {
+    content: "\e7f2";
+}
+
+.pt-icon-double-left:before {
+    content: "\e7f1";
+}

@@ -5,7 +5,7 @@
   "author": "pasilo he",
   "private": true,
   "scripts": {
-    "build:theme": "gulp -f src/theme-default/gulpfile.js compile && mkdir -p lib/theme-default && cp -r src/theme-default/lib/* lib/theme-default",
+    "build:theme": "gulp -f src/theme-default/gulpfile.js build && mkdir -p lib/theme-default && cp -r src/theme-default/lib/* lib/theme-default",
     "dev": "npm run build:theme && webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",

@@ -135,6 +135,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 src/theme-default/node_modules/*
+src/theme-default/fonts/*
 src/theme-default/lib/*
 lib/
 
