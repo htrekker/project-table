@@ -6,9 +6,6 @@
         <div style="position: relative;">
             <button @click="showDatePickerPanel = !showDatePickerPanel">点击展示日期选择器</button>
             <pt-date-picker v-if="showDatePickerPanel" v-model="date" :disable-date="disabledDate">
-                <template #footer>
-                    <div>xxxx</div>
-                </template>
             </pt-date-picker>
         </div>
 
@@ -55,6 +52,12 @@ export default {
         PtInlineInput,
         PtPersonSelector,
         PtIcon
+    },
+    watch: {
+        date(newVal, oldVal) {
+            // console.log(`new value: ${newVal}`);
+            // console.log(`old value: ${oldVal}`);
+        }
     }
 }
 </script>

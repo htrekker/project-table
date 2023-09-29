@@ -1,18 +1,23 @@
 <template>
     <div class="pt-calendar">
-        <div v-if="$slots.footer" class="pt-calendar-aside">
-            <slot name="footer"></slot>
+        <div v-if="$slots.options" class="pt-calendar-aside">
+            <slot name="options"></slot>
+        </div>
+        <div v-else-if="shortcut" style="display: flex; flex-direction: column; gap: 10px; padding: 20px 20px; border-right: 1px solid #ddd;">
+            <button>上个月</button>
+            <button @click="gotoToday">今天</button>
+            <button>下个月</button>
         </div>
         <div class="pt-calendar-main">
             <div class="pt-calendar-header">
                 <div class="pt-calendar-shortcut">
-                    <i class="pt-icon-d-arrow-left" @click="previousYear">x</i>
-                    <i class="pt-icon-arrow-left" @click="previousMonth">x</i>
+                    <i class="pt-icon-double-left" @click="previousYear"></i>
+                    <i class="pt-icon-arrow-left" @click="previousMonth"></i>
                 </div>
                 <p style="font-size: 18px;">{{ currentYear }} 年&nbsp;&nbsp;{{ currentMonth + 1 }} 月</p>
                 <div class="pt-calendar-shortcut">
-                    <i class="pt-icon-arrow-right" @click="nextMonth">x</i>
-                    <i class="pt-icon-d-arrow-right" @click="nextYear">x</i>
+                    <i class="pt-icon-arrow-right" @click="nextMonth"></i>
+                    <i class="pt-icon-double-right" @click="nextYear"></i>
                 </div>
             </div>
             <div class="pt-calendar-body">
@@ -29,7 +34,7 @@
                         <tr v-for="(dayInWeek, weekIndex) in daysInMonth" :key="`pt-calendar-row-${weekIndex}`" role="row">
                             <td role="gridcell" v-for="(day, dayIndex) in dayInWeek" :key="`pt-calendar-cell-${dayIndex}`"
                                 class="pt-calendar-cell"
-                                :class="{ 'disabled': disableDate(day.date), 'today': _isToday(day.date) }">
+                                :class="{ 'disabled': day.isDisabled, 'today': _isToday(day.date) }">
                                 <div class="pt-calendar-date"
                                     :class="{ 'selected-date': day.selected, 'not-current-month': !day.isCurMonth }"
                                     @click="selectDate(day)">
@@ -57,6 +62,14 @@ export default {
         }
     },
     methods: {
+        gotoToday() {
+            let now = new Date();
+            let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            this.currentYear = today.getFullYear();
+            this.currentMonth = today.getMonth();
+            this.currentDate = today.getDate();
+            this.$emit("input", today);
+        },
         previousYear() {
             this.currentYear -= 1;
         },
@@ -81,8 +94,11 @@ export default {
             if (selected.isDisabled) {
                 return;
             }
+            this.currentYear = selected.date.getFullYear();
+            this.currentMonth = selected.date.getMonth();
+            this.currentDate = selected.date.getDate();
             this.$emit("input", selected.date);
-            console.log(this.value);
+            // console.log(selected.date);
         },
         _getDayByOffset(date, offset) {
             let dayInMills = 24 * 60 * 60 * 1000;
@@ -97,6 +113,10 @@ export default {
         _isToday(date) {
             let now = new Date();
             return now.toDateString() === date.toDateString()
+        },
+        _isSameDay(d1, d2) {
+            return d1.getFullYear() === d2.getFullYear() &&
+                d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
         }
     },
     computed: {
@@ -106,15 +126,18 @@ export default {
             return new Date(now.getFullYear(), now.getMonth(), now.getDate());
         },
         daysInMonth() {
+            console.log(this.value);
             let daysInMonth = [[]];
             let dayCount = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
             let firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1);
             // append visible last month days
             for (let i = firstDayOfMonth.getDay(); i > 0; i--) {
+                let date = this._getDayByOffset(firstDayOfMonth, -i);
                 this._appendToDayGrid(daysInMonth, {
                     isCurMonth: false,
-                    date: this._getDayByOffset(firstDayOfMonth, -i),
+                    date: date,
                     selected: false,
+                    isDisabled: this.disableDate(date)
                 });
             }
             // append days in current Month
@@ -124,16 +147,19 @@ export default {
                 this._appendToDayGrid(daysInMonth, {
                     isCurMonth: true,
                     date: date,
-                    // selected: date === modelValue,
+                    selected: this._isSameDay(date, this.value),
+                    isDisabled: this.disableDate(date)
                 });
             }
             // append days in next month
             let lastDayOfMonth = new Date(this.currentYear, this.currentMonth, dayCount);
             for (let i = lastDayOfMonth.getDay() + 1, j = 1; i < 7; i++, j++) {
+                let date = this._getDayByOffset(lastDayOfMonth, j);
                 this._appendToDayGrid(daysInMonth, {
                     isCurMonth: false,
-                    date: this._getDayByOffset(lastDayOfMonth, j),
+                    date: date,
                     selected: false,
+                    isDisabled: this.disableDate(date)
                 });
             }
 
@@ -145,6 +171,10 @@ export default {
         disableDate: {
             type: Function,
             default: () => true
+        },
+        shortcut: {
+            type: Boolean,
+            default: true,
         }
     },
 }
@@ -185,6 +215,10 @@ export default {
     border-bottom: 1px solid #dcdfe6;
 }
 
+.pt-calendar-shortcut i:hover {
+    cursor: pointer;
+}
+
 .pt-calendar-table {
     border-collapse: collapse;
 }
@@ -209,7 +243,7 @@ export default {
     padding: 2px 0;
     text-align: center;
     cursor: pointer;
-    line-height: 30px;
+    line-height: 40px;
 }
 
 .pt-calendar-cell.disabled {
@@ -223,8 +257,8 @@ export default {
 }
 
 .pt-calendar-cell .selected-date {
-    border-radius: 14px;
-    background-color: #999;
+    border-radius: 50%;
+    background-color: #ccc;
     color: white;
 }
 
